@@ -1,0 +1,7 @@
+bin/
+obj/
+[Bb]uild/ # Sometimes build outputs are in a Build folder
+*.user # Visual Studio user settings
+*.suo # Visual Studio solution user options
+*.cache # NuGet package cache
+.vs/ # Visual Studio solution settings
