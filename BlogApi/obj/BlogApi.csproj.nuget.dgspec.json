@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Dell\\OneDrive\\Desktop\\C#\\BlogAPI\\BlogApi\\BlogApi.csproj": {}
+    "C:\\files\\Elective\\BlogAPI\\BlogApi\\BlogApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Dell\\OneDrive\\Desktop\\C#\\BlogAPI\\BlogApi\\BlogApi.csproj": {
+    "C:\\files\\Elective\\BlogAPI\\BlogApi\\BlogApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Dell\\OneDrive\\Desktop\\C#\\BlogAPI\\BlogApi\\BlogApi.csproj",
+        "projectUniqueName": "C:\\files\\Elective\\BlogAPI\\BlogApi\\BlogApi.csproj",
         "projectName": "BlogApi",
-        "projectPath": "C:\\Users\\Dell\\OneDrive\\Desktop\\C#\\BlogAPI\\BlogApi\\BlogApi.csproj",
-        "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Dell\\OneDrive\\Desktop\\C#\\BlogAPI\\BlogApi\\obj\\",
+        "projectPath": "C:\\files\\Elective\\BlogAPI\\BlogApi\\BlogApi.csproj",
+        "packagesPath": "C:\\Users\\Yodahe G\\.nuget\\packages\\",
+        "outputPath": "C:\\files\\Elective\\BlogAPI\\BlogApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Yodahe G\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
