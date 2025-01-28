@@ -25,6 +25,11 @@ app.UseHttpsRedirection();
 
 app.MapControllers(); 
 
+builder.Services.AddSingleton<IUserService, UserService>();
+// builder.Services.AddSingleton<IBlogService, BlogService>();
+// builder.Services.AddSingleton<ICommentService, CommentService>();
+// builder.Services.AddSingleton<ILikeService, LikeService>();
+
 app.UseAuthorization();
 
 app.Run();
