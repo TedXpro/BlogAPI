@@ -72,7 +72,7 @@ namespace BLOGAPI.Controllers{
         }
 
         [HttpGet("/user/{id}")]
-        public async Task<ActionResult> GetUser(int id){
+        public async Task<ActionResult> GetUser(string id){
             try{
                 return Ok(await _userService.GetUser(id));
             }
@@ -87,9 +87,10 @@ namespace BLOGAPI.Controllers{
         }
 
         [HttpPut("/user/{id}")]
-        public async Task<ActionResult> UpdateUser(int id, User user){
+        public async Task<ActionResult> UpdateUser(string id, User user){
             try {
-                return Ok(await _userService.UpdateUser(id, user));
+                await _userService.UpdateUser(id, user);
+                return Ok("user updated successfully.");
             }
             catch(Exception e){
                 if (e == Error.ErrUserNotFound){
@@ -102,9 +103,10 @@ namespace BLOGAPI.Controllers{
         }
 
         [HttpDelete("/user/{id}")]
-        public async Task<ActionResult> DeleteUser(int id){
+        public async Task<ActionResult> DeleteUser(string id){
             try {
-                return Ok(await _userService.DeleteUser(id));
+                await _userService.DeleteUser(id);
+                return Ok("user deleted successfully.");
             }
             catch(Exception e){
                 if (e == Error.ErrUserNotFound){
