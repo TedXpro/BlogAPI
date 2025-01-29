@@ -12,8 +12,8 @@ namespace BlogApi.Controllers{
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Blog>>> GetBlogs(){
-            var blogs = await _blogService?.GetBlogs()!;
+        public async Task<ActionResult<List<Blog>>> GetBlogs([FromQuery]int pageNumber = 1, [FromQuery]int pageSize = 20){
+            var blogs = await _blogService?.GetBlogs(pageNumber, pageSize)!;
             return Ok(blogs);
         }
 
@@ -48,19 +48,6 @@ namespace BlogApi.Controllers{
                 return Ok("Blog Deleted Successfully");
             }
             return NotFound($"There is No blog with id => {id}");
-        }
-
-        [HttpGet("GetBlogsByPagination")]
-        public async Task<ActionResult> GetBlogsByPagination([FromQuery]int pageNumber, [FromQuery]int pageSize){
-            try
-            {
-                var blogs = await _blogService?.GetBlogsByPagination(pageNumber, pageSize)!;
-                return Ok(blogs);
-            } catch(ArgumentException e){
-                return BadRequest(e.Message);
-            } catch(Exception e){
-                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-            }
         }
     }
 }

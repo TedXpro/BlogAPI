@@ -13,10 +13,19 @@ namespace BlogApi.Services
             _blogs = database.GetCollection<Blog>(configuration["MonogoDbSettings:BlogCollectionName"]);
         }
 
-        public async Task<List<Blog>> GetBlogs()
+        public async Task<List<Blog>> GetBlogs(int pageNumber, int pageSize)
         {
-            var blogs = await _blogs.Find(_ => true).ToListAsync();
-            return blogs;
+            try
+            {
+                return await _blogs.Find(_ => true)
+                    .Skip((pageNumber - 1) * pageSize)
+                    .Limit(pageSize)
+                    .ToListAsync();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Failed to retrieve blogs", e);
+            }
         }
 
         public async Task<Blog> GetBlog(string id)
@@ -51,19 +60,6 @@ namespace BlogApi.Services
                 return true;
             }
             return false;
-        }
-
-        public async Task<List<Blog>> GetBlogsByPagination(int pageNumber, int pageSize)
-        {
-            try
-            {
-                return await _blogs.Find(_ => true)
-                    .Skip((pageNumber - 1) * pageSize)
-                    .Limit(pageSize)
-                    .ToListAsync();
-            } catch(Exception e){
-                throw new Exception("Failed to retrieve blogs", e);
-            }
         }
     }
 }
