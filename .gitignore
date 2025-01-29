@@ -1,7 +1,79 @@
+# Compiled source
 bin/
 obj/
-[Bb]uild/ # Sometimes build outputs are in a Build folder
-*.user # Visual Studio user settings
-*.suo # Visual Studio solution user options
-*.cache # NuGet package cache
-.vs/ # Visual Studio solution settings
+out/
+TestResults/
+
+# Visual Studio related
+.vscode/
+.vs/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Dotnet dependencies
+*.dll
+*.exe
+*.pdb
+*.mdb
+*.ilk
+*.idb
+*.lib
+*.nupkg
+*.snupkg
+*.cache
+*.log
+
+# Build related
+build/
+debug/
+release/
+!build/**/*.md
+
+# NuGet Packages
+*.nuspec
+project.lock.json
+project.assets.json
+packages/
+packages.lock.json
+
+# Entity Framework Migrations
+Migrations/
+
+# Logs
+*.log
+logs/
+
+# Rider IDE files
+.idea/
+*.sln.iml
+
+# ASP.NET temporary files
+tmp/
+temp/
+
+# Publish and Deployment
+publish/
+wwwroot/
+
+# Docker
+**/[Dd]ockerfile
+**/[Dd]ockerignore
+
+# Secrets and Configs
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+
+# JetBrains Rider related
+.idea/
+*.sln.iml
+
+# Resharper
+_ReSharper*/
+
+# Others
+Thumbs.db
+desktop.ini
