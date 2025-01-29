@@ -7,5 +7,6 @@ namespace BlogApi.Services{
         public Task<bool> CreateBlog(Blog blog);
         public Task<bool> UpdateBlog(string id, Blog blog);
         public Task<bool> DeleteBlog(string id);
+        public Task<List<Blog>> GetBlogsByPagination(int pageNumber, int pageSize);
     }
 }

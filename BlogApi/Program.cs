@@ -11,6 +11,11 @@ builder.Services.AddSwaggerGen();
 
 // Register The Service class to the dependecny Injection Container
 builder.Services.AddScoped<IBlogService, BlogService>();
+builder.Services.AddSingleton<IUserService, UserService>();
+// builder.Services.AddSingleton<IBlogService, BlogService>();
+// builder.Services.AddSingleton<ICommentService, CommentService>();
+// builder.Services.AddSingleton<ILikeService, LikeService>();
+
 
 var app = builder.Build();
 
@@ -21,14 +26,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 app.MapControllers(); 
-
-builder.Services.AddSingleton<IUserService, UserService>();
-// builder.Services.AddSingleton<IBlogService, BlogService>();
-// builder.Services.AddSingleton<ICommentService, CommentService>();
-// builder.Services.AddSingleton<ILikeService, LikeService>();
 
 app.UseAuthorization();
 

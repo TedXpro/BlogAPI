@@ -49,5 +49,18 @@ namespace BlogApi.Controllers{
             }
             return NotFound($"There is No blog with id => {id}");
         }
+
+        [HttpGet("GetBlogsByPagination")]
+        public async Task<ActionResult> GetBlogsByPagination([FromQuery]int pageNumber, [FromQuery]int pageSize){
+            try
+            {
+                var blogs = await _blogService?.GetBlogsByPagination(pageNumber, pageSize)!;
+                return Ok(blogs);
+            } catch(ArgumentException e){
+                return BadRequest(e.Message);
+            } catch(Exception e){
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
+        }
     }
 }
