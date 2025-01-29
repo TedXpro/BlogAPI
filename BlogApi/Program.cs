@@ -18,7 +18,7 @@ builder.Services.AddScoped<IBlogService, BlogService>();
 builder.Services.AddSingleton<IUserService, UserService>();
 builder.Services.AddSingleton<ICommentService, CommentService>();
 // builder.Services.AddSingleton<IBlogService, BlogService>();
-// builder.Services.AddSingleton<ILikeService, LikeService>();
+builder.Services.AddSingleton<ILikeService, LikeService>();
 
 
 var app = builder.Build();
