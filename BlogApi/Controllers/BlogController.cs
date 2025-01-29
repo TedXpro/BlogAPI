@@ -49,5 +49,14 @@ namespace BlogApi.Controllers{
             }
             return NotFound($"There is No blog with id => {id}");
         }
+
+        [HttpGet("searchBlogs")]
+        public async Task<ActionResult> SearchBlogs([FromQuery]string? title, [FromQuery]string? author){
+            var blogs = await _blogService?.SearchBlogs(title, author)!;
+            if(blogs.Count > 0){
+                return Ok(blogs);
+            }
+            return NotFound("No Blogs Found");
+        }
     }
 }

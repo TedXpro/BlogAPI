@@ -61,5 +61,22 @@ namespace BlogApi.Services
             }
             return false;
         }
+
+        public async Task<List<Blog>> SearchBlogs(string ?title, string? author)
+        {
+            var filter = Builders<Blog>.Filter.Empty; 
+
+            if (!string.IsNullOrWhiteSpace(title))
+            {
+                filter &= Builders<Blog>.Filter.Regex("Title", new MongoDB.Bson.BsonRegularExpression(title, "i")); 
+            }
+            if (!string.IsNullOrWhiteSpace(author))
+            {
+                filter &= Builders<Blog>.Filter.Regex("AuthorName", new MongoDB.Bson.BsonRegularExpression(author, "i")); 
+            }
+
+            return await _blogs.Find(filter).ToListAsync();
+        }
+
     }
 }
