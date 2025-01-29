@@ -12,8 +12,8 @@ namespace BlogApi.Controllers{
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Blog>>> GetBlogs(){
-            var blogs = await _blogService?.GetBlogs()!;
+        public async Task<ActionResult<List<Blog>>> GetBlogs([FromQuery]int pageNumber = 1, [FromQuery]int pageSize = 20){
+            var blogs = await _blogService?.GetBlogs(pageNumber, pageSize)!;
             return Ok(blogs);
         }
 
@@ -48,6 +48,15 @@ namespace BlogApi.Controllers{
                 return Ok("Blog Deleted Successfully");
             }
             return NotFound($"There is No blog with id => {id}");
+        }
+
+        [HttpGet("searchBlogs")]
+        public async Task<ActionResult> SearchBlogs([FromQuery]string? title, [FromQuery]string? author){
+            var blogs = await _blogService?.SearchBlogs(title, author)!;
+            if(blogs.Count > 0){
+                return Ok(blogs);
+            }
+            return NotFound("No Blogs Found");
         }
     }
 }
