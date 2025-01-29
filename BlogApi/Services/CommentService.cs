@@ -10,9 +10,22 @@ namespace BLOGAPI.Services
 
         public CommentService(IOptions<MongoDbSettings> mongoDBSettings)
         {
-            var mongoClient = new MongoClient(mongoDBSettings.Value.ConnectionString);
-            var mongoDatabase = mongoClient.GetDatabase(mongoDBSettings.Value.DatabaseName);
-            _comments = mongoDatabase.GetCollection<Comment>(mongoDBSettings.Value.CommentCollectionName);
+            if (mongoDBSettings == null || string.IsNullOrEmpty(mongoDBSettings.Value?.ConnectionString))
+            {
+                throw new ArgumentException("MongoDB connection string is not configured properly");
+            }
+
+            try
+            {
+                var mongoClient = new MongoClient(mongoDBSettings.Value.ConnectionString);
+                Console.WriteLine(mongoDBSettings.Value.ConnectionString);
+                var mongoDatabase = mongoClient.GetDatabase(mongoDBSettings.Value.DatabaseName);
+                _comments = mongoDatabase.GetCollection<Comment>(mongoDBSettings.Value.CommentCollectionName);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to initialize MongoDB connection: {ex.Message}");
+            }
         }
 
         public async Task<Comment> CreateAsync(Comment comment)
