@@ -24,7 +24,7 @@ namespace BLOGAPI.Controllers
             return CreatedAtAction(nameof(GetComment), new { id = createdComment.Id }, createdComment);
         }
 
-        [HttpPost("edit")]
+        [HttpPut("edit")]
         public async Task<ActionResult<Comment>> EditComment(string id, [FromBody] Comment comment)
         {
             if (comment == null) return BadRequest();
@@ -37,7 +37,7 @@ namespace BLOGAPI.Controllers
             return Ok(updatedComment);
         }
 
-        [HttpPost("delete")]
+        [HttpDelete("delete")]
         public async Task<IActionResult> DeleteComment(string id)
         {
             var comment = await _commentService.GetByIdAsync(id);
