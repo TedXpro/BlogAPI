@@ -1070,19 +1070,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Yodahe G\\.nuget\\packages\\": {}
+    "C:\\Users\\Yemam\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\files\\Elective\\BlogAPI\\BlogApi\\BlogApi.csproj",
+      "projectUniqueName": "C:\\Users\\Yemam\\Desktop\\CS Files\\4th yr 1st sem\\Elective\\BlogApi\\BlogApi\\BlogApi\\BlogApi.csproj",
       "projectName": "BlogApi",
-      "projectPath": "C:\\files\\Elective\\BlogAPI\\BlogApi\\BlogApi.csproj",
-      "packagesPath": "C:\\Users\\Yodahe G\\.nuget\\packages\\",
-      "outputPath": "C:\\files\\Elective\\BlogAPI\\BlogApi\\obj\\",
+      "projectPath": "C:\\Users\\Yemam\\Desktop\\CS Files\\4th yr 1st sem\\Elective\\BlogApi\\BlogApi\\BlogApi\\BlogApi.csproj",
+      "packagesPath": "C:\\Users\\Yemam\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Yemam\\Desktop\\CS Files\\4th yr 1st sem\\Elective\\BlogApi\\BlogApi\\BlogApi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Yodahe G\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Yemam\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -1143,7 +1143,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.404/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.405/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
