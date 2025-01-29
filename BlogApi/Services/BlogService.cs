@@ -8,9 +8,9 @@ namespace BlogApi.Services
         private readonly IMongoCollection<Blog>? _blogs;
         public BlogService(IConfiguration configuration)
         {
-            var client = new MongoClient(configuration["MonogoDbSettings:ConnectionString"]);
-            var database = client.GetDatabase(configuration["MonogoDbSettings:DatabaseName"]);
-            _blogs = database.GetCollection<Blog>(configuration["MonogoDbSettings:BlogCollectionName"]);
+            var client = new MongoClient(configuration["MongoDbSettings:ConnectionString"]);
+            var database = client.GetDatabase(configuration["MongoDbSettings:DatabaseName"]);
+            _blogs = database.GetCollection<Blog>(configuration["MongoDbSettings:BlogCollectionName"]);
         }
 
         public async Task<List<Blog>> GetBlogs(int pageNumber, int pageSize)
