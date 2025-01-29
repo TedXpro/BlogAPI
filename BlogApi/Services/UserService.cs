@@ -8,8 +8,10 @@ public class UserService : IUserService{
 
     private readonly IMongoCollection<User> _users;
 
-    public UserService(IMongoCollection<User> users){
-        _users = users;
+    public UserService(IConfiguration configuration){
+        var client = new MongoClient(configuration.GetConnectionString("BlogDb"));
+        var database = client.GetDatabase("BlogDb");
+        _users = database.GetCollection<User>("Users");
     }
 
     public async Task Register(User user){
@@ -66,7 +68,7 @@ public class UserService : IUserService{
         _users.InsertOne(user);
 
         // send verification email
-        
+        // unimplemented
 
         return;
 
