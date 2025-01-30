@@ -119,3 +119,5 @@ C:\Users\Yemam\Desktop\CS Files\4th yr 1st sem\Elective\BlogApi\BlogApi\BlogApi\
 C:\Users\Yemam\Desktop\CS Files\4th yr 1st sem\Elective\BlogApi\BlogApi\BlogApi\obj\Debug\net8.0\BlogApi.pdb
 C:\Users\Yemam\Desktop\CS Files\4th yr 1st sem\Elective\BlogApi\BlogApi\BlogApi\obj\Debug\net8.0\BlogApi.genruntimeconfig.cache
 C:\Users\Yemam\Desktop\CS Files\4th yr 1st sem\Elective\BlogApi\BlogApi\BlogApi\obj\Debug\net8.0\ref\BlogApi.dll
+D:\Designs\DotNetFinalProject\BlogAPI\BlogApi\bin\Debug\net8.0\global.json
+D:\Designs\DotNetFinalProject\BlogAPI\BlogApi\bin\Debug\net8.0\BCrypt.Net-Next.dll

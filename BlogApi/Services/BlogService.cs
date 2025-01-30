@@ -30,8 +30,13 @@ namespace BlogApi.Services
 
         public async Task<Blog> GetBlog(string id)
         {
-            var blog = await _blogs.Find(b => b.Id == id).FirstOrDefaultAsync();
-            return blog;
+            try
+            {
+                var blog = await _blogs.Find(b => b.Id == id).FirstOrDefaultAsync();
+                return blog;
+            }catch (FormatException){
+                throw new InvalidInputException("Invalid id format " + id);
+            }
         }
 
         public async Task<bool> CreateBlog(Blog blog)
@@ -43,23 +48,36 @@ namespace BlogApi.Services
 
         public async Task<bool> UpdateBlog(string id, Blog blog)
         {
-            blog.Id = id;
-            var status = await _blogs.ReplaceOneAsync(b => b.Id == id, blog);
-            if (status.ModifiedCount > 0)
+            try
             {
-                return true;
+                blog.Id = id;
+                var status = await _blogs.ReplaceOneAsync(b => b.Id == id, blog);
+                if (status.ModifiedCount > 0)
+                {
+                    return true;
+                }
+                return false;
+            } catch (FormatException)
+            {
+                throw new InvalidInputException("Invalid id format " + id);
             }
-            return false;
         }
 
         public async Task<bool> DeleteBlog(string id)
         {
-            var status = await _blogs.DeleteOneAsync(b => b.Id == id);
-            if (status.DeletedCount > 0)
+            try
             {
-                return true;
+                var status = await _blogs.DeleteOneAsync(b => b.Id == id);
+                if (status.DeletedCount > 0)
+                {
+                    return true;
+                }
+                return false;
             }
-            return false;
+            catch (FormatException)
+            {
+                throw new InvalidInputException("Invalid id format " + id);
+            }
         }
 
         public async Task<List<Blog>> SearchBlogs(string ?title, string? author)
@@ -77,6 +95,5 @@ namespace BlogApi.Services
 
             return await _blogs.Find(filter).ToListAsync();
         }
-
     }
 }
