@@ -1,7 +1,9 @@
 using BLOGAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BLOGAPI.Controllers{
+    [Authorize]
     [ApiController]
     [Route("[Controller]")]
     public class UserController : ControllerBase{
@@ -11,6 +13,7 @@ namespace BLOGAPI.Controllers{
             _userService = us;
         }
 
+        [AllowAnonymous]
         [HttpPost("/register")]
         public async Task<ActionResult> Register(User user){
             try {
@@ -39,6 +42,7 @@ namespace BLOGAPI.Controllers{
             }
         }
 
+        [AllowAnonymous]
         [HttpPost("/login")]
         public async Task<ActionResult<(string, string)>> Login(Account account){
             try{
@@ -61,6 +65,7 @@ namespace BLOGAPI.Controllers{
             
         }
 
+        [Authorize(Roles = "admin")]
         [HttpGet("/users")]
         public async Task<ActionResult> GetUsers(){
             try{
@@ -71,6 +76,7 @@ namespace BLOGAPI.Controllers{
             }
         }
 
+        [Authorize(Roles = "admin")]
         [HttpGet("/user/{id}")]
         public async Task<ActionResult> GetUser(string id){
             try{
@@ -86,11 +92,12 @@ namespace BLOGAPI.Controllers{
             }
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPut("/user/{id}")]
-        public async Task<ActionResult> UpdateUser(string id, User user){
-            try {
-                await _userService.UpdateUser(id, user);
-                return Ok("user updated successfully.");
+        public async Task<ActionResult> PromoteUser(string id, User user){
+            try{
+                await _userService.PromoteUser(id);
+                return Ok("User promoted successfully.");
             }
             catch(Exception e){
                 if (e == Error.ErrUserNotFound){
@@ -102,11 +109,12 @@ namespace BLOGAPI.Controllers{
             }
         }
 
-        [HttpDelete("/user/{id}")]
-        public async Task<ActionResult> DeleteUser(string id){
-            try {
-                await _userService.DeleteUser(id);
-                return Ok("user deleted successfully.");
+        [Authorize(Roles = "admin")]
+        [HttpPost("/user/{id}")]
+        public async Task<ActionResult> DemoteUser(string id){
+            try{
+                await _userService.DemoteUser(id);
+                return Ok("User demoted successfully.");
             }
             catch(Exception e){
                 if (e == Error.ErrUserNotFound){
@@ -115,8 +123,18 @@ namespace BLOGAPI.Controllers{
                 else{
                     return StatusCode(500, "An error occurred");
                 }
+            }
+        }
+
+        [HttpPost("refresh")]
+        public IActionResult Refresh([FromBody] string refreshToken) {
+            try {
+                var tokens = _userService.RefreshToken(refreshToken);
+                return Ok(new { accessToken = tokens.accessToken, refreshToken = tokens.refreshToken });
+            }
+            catch (Exception ex) {
+                return Unauthorized(ex.Message);
             }
         }
     }
-
 }

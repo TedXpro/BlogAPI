@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using BLOGAPI.Models;
 using BLOGAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BLOGAPI.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class CommentController : ControllerBase
@@ -15,6 +17,7 @@ namespace BLOGAPI.Controllers
             _commentService = commentService;
         }
 
+        [Authorize]
         [HttpPost("post")]
         public async Task<ActionResult<Comment>> CreateComment([FromBody] Comment comment)
         {
@@ -24,6 +27,7 @@ namespace BLOGAPI.Controllers
             return CreatedAtAction(nameof(GetComment), new { id = createdComment.Id }, createdComment);
         }
 
+        [Authorize]
         [HttpPut("edit")]
         public async Task<ActionResult<Comment>> EditComment(string id, [FromBody] Comment comment)
         {
@@ -37,6 +41,7 @@ namespace BLOGAPI.Controllers
             return Ok(updatedComment);
         }
 
+        [Authorize]
         [HttpDelete("delete")]
         public async Task<IActionResult> DeleteComment(string id)
         {
@@ -47,6 +52,7 @@ namespace BLOGAPI.Controllers
             return NoContent();
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Comment>> GetComment(string id)
         {
@@ -55,6 +61,7 @@ namespace BLOGAPI.Controllers
             return Ok(comment);
         }
 
+        [Authorize]
         [HttpGet("for/{blogId}")]
         public async Task<ActionResult<CommentResponse>> GetCommentsForBlog(string blogId, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
