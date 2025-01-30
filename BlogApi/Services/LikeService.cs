@@ -7,10 +7,10 @@ namespace BlogApi.Services{
         private readonly IMongoCollection<Blog>? _blogs;
 
         public LikeService(IConfiguration configuration){
-            var client = new MongoClient(configuration["MonogoDbSettings:ConnectionString"]);
-            var database = client.GetDatabase(configuration["MonogoDbSettings:DatabaseName"]);
-            _likes = database.GetCollection<Like>(configuration["MonogoDbSettings:LikeCollectionName"]);
-            _blogs = database.GetCollection<Blog>(configuration["MonogoDbSettings:BlogCollectionName"]);
+            var client = new MongoClient(configuration["MongoDbSettings:ConnectionString"]);
+            var database = client.GetDatabase(configuration["MongoDbSettings:DatabaseName"]);
+            _likes = database.GetCollection<Like>(configuration["MongoDbSettings:LikeCollectionName"]);
+            _blogs = database.GetCollection<Blog>(configuration["MongoDbSettings:BlogCollectionName"]);
         }
 
         public async Task<bool> LikeBlog(string blogId, string userId){
@@ -58,7 +58,10 @@ namespace BlogApi.Services{
         }
 
         public async Task<int> GetLikeCount(string blogId){
-    return (int)await _likes.CountDocumentsAsync(l => l.BlogId == blogId && l.Type == "like");
-}
+            return (int)await _likes.CountDocumentsAsync(l => l.BlogId == blogId && l.Type == "like");
+        }
+        public async Task<int> GetDislikeCount(string blogId){
+            return (int)await _likes.CountDocumentsAsync(l => l.BlogId == blogId && l.Type == "dislike");
+        }
 }
 }

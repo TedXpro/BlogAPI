@@ -26,10 +26,16 @@ namespace BlogApi.Controllers{
             return BadRequest("You have already disliked this blog");
         }
 
-        [HttpGet("{blogId}/count")]
+        [HttpGet("{blogId}/likesCount")]
         public async Task<ActionResult<int>> GetLikeCount(string blogId){
             var count = await _likeService.GetLikeCount(blogId);
             return Ok(count);
         }
+        [HttpGet("{blogId}/dislikesCount")]
+        public async Task<IActionResult> GetDislikeCount(string blogId){
+            var count = await _likeService.GetDislikeCount(blogId);
+            return Ok(new { blogId, dislikeCount = count });
+        }
+
     }
 }
