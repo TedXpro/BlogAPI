@@ -19,11 +19,19 @@ namespace BlogApi.Controllers{
 
         [HttpGet("{id}")]
         public async Task<ActionResult> GetBlog(string id){
-            var blog = await _blogService?.GetBlog(id)!;
-            if(blog != null){
-                return Ok(blog);
+            try
+            {
+                var blog = await _blogService?.GetBlog(id)!;
+                if (blog != null)
+                {
+                    return Ok(blog);
+                }
+                return NotFound($"There is No blog with id => {id}");
             }
-            return NotFound($"There is No blog with id => {id}");
+            catch (InvalidInputException e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpPost]
@@ -36,18 +44,34 @@ namespace BlogApi.Controllers{
 
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateBlog(string id, Blog blog){
-            if(await _blogService?.UpdateBlog(id, blog)! == true){
-                return Ok("Blog Updated Successfully"); 
+            try
+            {
+                if (await _blogService?.UpdateBlog(id, blog)! == true)
+                {
+                    return Ok("Blog Updated Successfully");
+                }
+                return NotFound($"There is No blog with id => {id}");
             }
-            return NotFound($"There is No blog with id => {id}");
+            catch (InvalidInputException e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteBlog(string id){
-            if(await _blogService?.DeleteBlog(id)! == true){
-                return Ok("Blog Deleted Successfully");
+            try
+            {
+                if (await _blogService?.DeleteBlog(id)! == true)
+                {
+                    return Ok("Blog Deleted Successfully");
+                }
+                return NotFound($"There is No blog with id => {id}");
             }
-            return NotFound($"There is No blog with id => {id}");
+            catch (InvalidInputException e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpGet("searchBlogs")]
