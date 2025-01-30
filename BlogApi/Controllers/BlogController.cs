@@ -1,8 +1,10 @@
-using BlogApi.Services;
+using BLOGAPI.Services;
 using BLOGAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlogApi.Controllers{
+    [Authorize]
     [ApiController]
     [Route("[Controller]")]
     public class BlogController : ControllerBase{
@@ -11,12 +13,14 @@ namespace BlogApi.Controllers{
             _blogService = blogService;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<List<Blog>>> GetBlogs([FromQuery]int pageNumber = 1, [FromQuery]int pageSize = 20){
             var blogs = await _blogService?.GetBlogs(pageNumber, pageSize)!;
             return Ok(blogs);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult> GetBlog(string id){
             try
@@ -34,6 +38,7 @@ namespace BlogApi.Controllers{
             }
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult> CreateBlog(Blog blog){
             if(await _blogService?.CreateBlog(blog)! == true){
@@ -41,7 +46,14 @@ namespace BlogApi.Controllers{
             }
             return BadRequest("Failed to create Blog");
         }
+        // public async Task<ActionResult> CreateBlog(Blog blog){
+        //     if(await _blogService?.CreateBlog(blog)! == true){
+        //         return Ok("Blog Created Successfully");
+        //     }
+        //     return BadRequest("Failed to create Blog");
+        // }
 
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateBlog(string id, Blog blog){
             try
@@ -58,6 +70,7 @@ namespace BlogApi.Controllers{
             }
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteBlog(string id){
             try
@@ -74,6 +87,7 @@ namespace BlogApi.Controllers{
             }
         }
 
+        [AllowAnonymous]
         [HttpGet("searchBlogs")]
         public async Task<ActionResult> SearchBlogs([FromQuery]string? title, [FromQuery]string? author){
             var blogs = await _blogService?.SearchBlogs(title, author)!;

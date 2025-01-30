@@ -1,7 +1,7 @@
 using BLOGAPI.Models; 
 using MongoDB.Driver; 
  
-namespace BlogApi.Services{ 
+namespace BLOGAPI.Services{ 
     public class LikeService : ILikeService{ 
         private readonly IMongoCollection<Like>? _likes; 
         private readonly IMongoCollection<Blog>? _blogs; 

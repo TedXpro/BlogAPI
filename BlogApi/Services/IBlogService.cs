@@ -1,6 +1,6 @@
 using BLOGAPI.Models;
 
-namespace BlogApi.Services{
+namespace BLOGAPI.Services{
     public interface IBlogService{
         public Task<List<Blog>> GetBlogs(int pageNumber, int pageSize);
         public Task<Blog> GetBlog(string id);
