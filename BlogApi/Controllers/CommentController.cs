@@ -27,6 +27,7 @@ namespace BLOGAPI.Controllers
         [HttpPut("edit")]
         public async Task<ActionResult<Comment>> EditComment(string id, [FromBody] Comment comment)
         {
+            try{
             if (comment == null) return BadRequest();
 
             var existingComment = await _commentService.GetByIdAsync(id);
@@ -35,29 +36,41 @@ namespace BLOGAPI.Controllers
             comment.Id = id;
             var updatedComment = await _commentService.UpdateAsync(id, comment);
             return Ok(updatedComment);
+            } catch (InvalidInputException ex){
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete("delete")]
         public async Task<IActionResult> DeleteComment(string id)
         {
+            try{
             var comment = await _commentService.GetByIdAsync(id);
             if (comment == null) return NotFound();
 
             await _commentService.DeleteAsync(id);
             return NoContent();
+            } catch (InvalidInputException ex){
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Comment>> GetComment(string id)
         {
+            try{
             var comment = await _commentService.GetByIdAsync(id);
             if (comment == null) return NotFound();
             return Ok(comment);
+            } catch (InvalidInputException ex){
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("for/{blogId}")]
         public async Task<ActionResult<CommentResponse>> GetCommentsForBlog(string blogId, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
+            try{
             var comments = await _commentService.GetByBlogIdAsync(blogId, page, pageSize);
             var totalComments = await _commentService.GetCommentCountForBlogAsync(blogId);
             
@@ -71,6 +84,9 @@ namespace BLOGAPI.Controllers
             };
             
             return Ok(response);
+            } catch (InvalidInputException ex){
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
