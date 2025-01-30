@@ -30,6 +30,7 @@ namespace BLOGAPI.Services
 
         public async Task<Comment> CreateAsync(Comment comment)
         {
+            comment.Id = null;
             comment.CreatedAt = DateTime.UtcNow;
             await _comments.InsertOneAsync(comment);
             return comment;
@@ -37,32 +38,65 @@ namespace BLOGAPI.Services
 
         public async Task<Comment> GetByIdAsync(string id)
         {
+            try{
             return await _comments.Find(c => c.Id == id).FirstOrDefaultAsync();
+            } catch (FormatException){
+                throw new InvalidInputException("Invalid id format " + id);
+            }   
         }
 
-        public async Task<List<Comment>> GetByBlogIdAsync(string blogId, int page = 1, int pageSize = 10)
-        {
-            return await _comments.Find(c => c.BlogId == blogId)
-                                .SortByDescending(c => c.CreatedAt)
-                                .Skip((page - 1) * pageSize)
-                                .Limit(pageSize)
-                                .ToListAsync();
+        public async Task<List<Comment>> GetByBlogIdAsync(string blogId, int page = 1, int pageSize = 10) 
+        { 
+            if (string.IsNullOrWhiteSpace(blogId)) 
+            { 
+                throw new ArgumentException("Blog ID cannot be null or empty."); 
+            } 
+ 
+            try 
+            { 
+                var filter = Builders<Comment>.Filter.Eq(c => c.BlogId, blogId); 
+ 
+                return await _comments.Find(filter) 
+                                      .SortByDescending(c => c.CreatedAt)  // Sort newest comments first 
+                                      .Skip((page - 1) * pageSize)  // Pagination: skip previous pages 
+                                      .Limit(pageSize)  // Limit results per page 
+                                      .ToListAsync(); 
+            } 
+            catch (FormatException) 
+            { 
+                throw new InvalidInputException($"Invalid Blog ID format: {blogId}"); 
+            } 
+            catch (Exception ex) 
+            { 
+                throw new Exception($"Error retrieving comments for Blog ID {blogId}: {ex.Message}", ex); 
+            } 
         }
-
         public async Task<Comment> UpdateAsync(string id, Comment comment)
         {
+            try{
             await _comments.ReplaceOneAsync(c => c.Id == id, comment);
             return comment;
+            } catch (FormatException){
+                throw new InvalidInputException("Invalid id format " + id);
+            }
         }
 
         public async Task DeleteAsync(string id)
         {
+            try{
             await _comments.DeleteOneAsync(c => c.Id == id);
+            } catch (FormatException){
+                throw new InvalidInputException("Invalid id format " + id);
+            }
         }
 
         public async Task<long> GetCommentCountForBlogAsync(string blogId)
         {
+            try{
             return await _comments.CountDocumentsAsync(c => c.BlogId == blogId);
+            } catch (FormatException){
+                throw new InvalidInputException("Invalid blog id format " + blogId);
+            }
         }
     }
 }
