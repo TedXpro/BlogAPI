@@ -1,7 +1,7 @@
 using BLOGAPI.Models;
 using MongoDB.Driver;
 
-namespace BlogApi.Services
+namespace BLOGAPI.Services
 {
     public class BlogService : IBlogService
     {

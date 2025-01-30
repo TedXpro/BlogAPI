@@ -1,8 +1,10 @@
-using BlogApi.Services; 
+using BLOGAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc; 
  
 namespace BlogApi.Controllers 
 { 
+    [Authorize]
     [ApiController] 
     [Route("[Controller]")] 
     public class LikeController : ControllerBase 
@@ -12,7 +14,8 @@ namespace BlogApi.Controllers
         { 
             _likeService = likeService; 
         } 
- 
+
+        [Authorize]
         [HttpPost("like")] 
         public async Task<IActionResult> LikeBlog(string blogId, [FromQuery] string userId) 
         { 
@@ -30,6 +33,7 @@ namespace BlogApi.Controllers
             return Ok(new { message = "Blog liked successfully!" }); 
         } 
 
+        [Authorize]
         [HttpGet("likesCount")] 
         public async Task<IActionResult> GetLikeCount(string blogId) 
         { 
@@ -42,8 +46,7 @@ namespace BlogApi.Controllers
             return Ok(new { blogId, likeCount = count }); 
         } 
  
- 
- 
+        [Authorize]
         [HttpPost("{blogId}/dislike")] 
         public async Task<ActionResult> DislikeBlog(string blogId, [FromQuery] string userId) 
         { 
@@ -53,7 +56,8 @@ namespace BlogApi.Controllers
             } 
             return BadRequest("You have already disliked this blog"); 
         } 
- 
+
+        [Authorize]
         [HttpGet("{blogId}/dislikesCount")] 
         public async Task<IActionResult> GetDislikeCount(string blogId) 
         { 
@@ -65,6 +69,5 @@ namespace BlogApi.Controllers
             var count = await _likeService.GetDislikeCount(blogId); 
             return Ok(new { blogId, dislikeCount = count }); 
         } 
- 
     } 
 }
