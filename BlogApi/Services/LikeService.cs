@@ -29,11 +29,11 @@ namespace BlogApi.Services{
                 UserId = userId, 
                 Type = "like" 
             }; 
-            await _likes.InsertOneAsync(like); 
+            await _likes?.InsertOneAsync(like)!; 
  
             var filter = Builders<Blog>.Filter.Eq(b => b.Id, blogId); 
             var update = Builders<Blog>.Update.Inc(b => b.LikeCount, 1); 
-            await _blogs.UpdateOneAsync(filter, update); 
+            await _blogs?.UpdateOneAsync(filter, update)!; 
  
             return true; 
         } 
@@ -56,11 +56,11 @@ namespace BlogApi.Services{
                 UserId = userId, 
                 Type = "dislike" 
             }; 
-            await _likes.InsertOneAsync(dislike); 
+            await _likes?.InsertOneAsync(dislike)!; 
  
             var filter = Builders<Blog>.Filter.Eq(b => b.Id, blogId); 
             var update = Builders<Blog>.Update.Inc(b => b.LikeCount, -1); 
-            await _blogs.UpdateOneAsync(filter, update); 
+            await _blogs?.UpdateOneAsync(filter, update)!; 
  
             return true; 
         } 
